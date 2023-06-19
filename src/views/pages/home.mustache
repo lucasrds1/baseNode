@@ -1,5 +1,5 @@
 {{>partials/header}}
-
+{{#data}}
 Opa {{name}} {{lastName}}, tudo bem?
 {{#showOld}}
     Como vai a vida?
@@ -11,9 +11,9 @@ Opa {{name}} {{lastName}}, tudo bem?
 <hr/>
 <h2>Produtos</h2>
 <ul>
-    {{#products}}
+    {{#list}}
         {{>partials/productItem}}
-    {{/products}}
+    {{/list}}
 </ul>
 
 <hr/>
@@ -34,5 +34,5 @@ Opa {{name}} {{lastName}}, tudo bem?
         Não há frases motivacionais hoje.
     {{/frasesDoDia}}
 </ul>
-
+{{/data}}
 {{>partials/footer}}

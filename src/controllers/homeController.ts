@@ -1,24 +1,19 @@
 import { Request, Response } from 'express';
-
+import {sequelize} from '../instances/mysql';
 import { Product } from '../models/Product';
 
-export const home = (req: Request, res: Response)=>{
-    let age: number = 90;
-    let showOld: boolean = false;
+export const home = async(req: Request, res: Response)=>{
+    let data: Record<string | number, any> = {};
+    data['age'] = 90;
+    data['showOld'] = false
 
-    if(age > 50) {
-        showOld = true;
+    if(data['age'] > 50) {
+        data['showOld'] = true;
     }
-
-    let list = Product.getAll();
-    let expensiveList = Product.getFromPriceAfter(12);
-
+    data['name'] = 'Lucas';
+    data['list'] = Product.getAll();
+    data['expensiveList'] = Product.getFromPriceAfter(12);
     res.render('pages/home', {
-        name: 'Bonieky',
-        lastName: 'Lacerda',
-        showOld,
-        products: list,
-        expensives: expensiveList,
-        frasesDoDia: []
+        data
     });
 };
