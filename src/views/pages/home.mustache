@@ -1,12 +1,19 @@
 {{>partials/header}}
 {{#data}}
-Opa {{name}} {{lastName}}, tudo bem?
-{{#showOld}}
-    Como vai a vida?
-{{/showOld}}
-{{^showOld}}
-    Beleza?
-{{/showOld}}
+
+<h2>Usuários:</h2>
+<form method="POST" action="/saveUser">
+<input type="hidden" name="id" placeholder="Nome" value="{{id}}">
+<input type="text" name="nome" placeholder="Nome" value="{{nome}}">
+<input type="number" name="idade" placeholder="Idade" value="{{idade}}">
+<input type="submit" value="{{valSubmit}}">
+
+</form>
+<ul>
+    {{#users}}
+        <li>{{nome}} - {{idade}} <a href="/{{id}}">Editar</a></li>
+    {{/users}}
+</ul>
 
 <hr/>
 <h2>Produtos</h2>
