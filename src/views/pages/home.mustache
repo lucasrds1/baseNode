@@ -11,35 +11,17 @@
 </form>
 <ul>
     {{#users}}
-        <li>{{nome}} - {{idade}} <a href="/{{id}}">Editar</a></li>
+        <li>{{nome}} - {{idade}} <a href="/{{id}}">Editar</a> <a href="/deleteUser/{{id}}">Excluir</a></li>
     {{/users}}
 </ul>
-
-<hr/>
-<h2>Produtos</h2>
-<ul>
-    {{#list}}
-        {{>partials/productItem}}
-    {{/list}}
-</ul>
-
-<hr/>
-<h2>Produtos a partir de R$ 12</h2>
-<ul>
-    {{#expensives}}
-        {{>partials/productItem}}
-    {{/expensives}}
-</ul>
-
-<hr/>
-
-<ul>
-    {{#frasesDoDia}}
-        <li>{{.}}</li>
-    {{/frasesDoDia}}
-    {{^frasesDoDia}}
-        Não há frases motivacionais hoje.
-    {{/frasesDoDia}}
-</ul>
+<hr>
+<h2>Pesquisar ou Adicionar usuário por nome:</h2>
+<form method="GET" action="/{{nome}}">
+    <input type="text" name="search" >
+    <input type="submit" value="Pesquisar">
+</form>
+<h4>Resultado:</h4>
+Nome:{{nomeDEdit}}<br>
+Idade:{{idadeDEdit}}
 {{/data}}
 {{>partials/footer}}

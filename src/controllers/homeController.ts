@@ -12,6 +12,9 @@ export const home = async(req: Request, res: Response)=>{
     data['idade'] = '';
     data['valSubmit'] = 'Cadastrar';
 
+    //findOne = consulta 1
+    //findByPk = consulta por primary key
+    
     let users = await User.findAll({
         limit: 5,
         order: [
@@ -45,8 +48,25 @@ export const home = async(req: Request, res: Response)=>{
     if(data['age'] > 50) {
         data['showOld'] = true;
     }
-    data['list'] = Product.getAll();
-    data['expensiveList'] = Product.getFromPriceAfter(12);
+    if(req.query.search){
+        const [usuario, created] = await User.findOrCreate({
+            where: {
+                nome: req.query.search
+            },
+            defaults:{
+                //qnd nao tem nome aq ele insere do where
+                nome: req.query.search,
+                idade: 0
+            }
+        })
+        if(usuario){
+            data['nomeDEdit'] = usuario.nome
+            data['idadeDEdit'] = usuario.idade
+        }
+        if( created){
+            res.redirect('/');
+        }
+    }
     res.render('pages/home', {
         data
     });
@@ -61,9 +81,18 @@ export const saveUser = async(req: Request, res: Response)=>{
             where:{id:req.body.id}
         })
     }else{
-        let insert = await User.create({nome: req.body.nome, idade: req.body.idade});
-        insert.save();
+        if(req.body.nome !== '' && req.body.idade !==  ''){
+            let insert = await User.create({nome: req.body.nome, idade: req.body.idade});
+            insert.save();
+        }
     }
     res.redirect('/');
-
+}
+export const deleteUser = async(req: Request, res: Response)=>{
+    if(parseInt(req.params.id) > 0){
+        await User.destroy({
+            where:{id: req.params.id}
+        });
+    }
+    res.redirect('/');
 }
